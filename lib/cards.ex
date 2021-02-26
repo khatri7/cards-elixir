@@ -1,21 +1,11 @@
 defmodule Cards do
   @moduledoc """
-  Documentation for `Cards`.
+    Provides methods for creating and handling a deck of cards
   """
 
   @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Cards.hello()
-      :world
-
+    Returns a list of strings represting a deck of playing cards
   """
-  def hello do
-    :world
-  end
-
   def createDeck do
     values = ["Ace", "Two", "Three", "Four", "Five"]
     suits = ["Spades", "Clubs", "Hearts", "Diamonds"]
@@ -36,6 +26,17 @@ defmodule Cards do
     hand
   end
 
+  @doc """
+    Divides the deck into a hand and teh remainder of the deck. The `handSize` argument indicates how many cards should be in a hand.
+
+  ## Examples
+    
+      iex> deck = Cards.createDeck
+      iex> {hand, deck} = Cards.deal(deck, 1)
+      iex> hand
+      ["Ace of Spades"]
+
+  """
   def deal(deck, handSize) do
     Enum.split(deck, handSize)
     |> hand
@@ -51,5 +52,11 @@ defmodule Cards do
       {:ok, binary}-> :erlang.binary_to_term binary
       {:error, _reason} -> "No such file found!"
     end
+  end
+
+  def createHand(handSize) do
+    createDeck
+    |> shuffle
+    |> deal(handSize)
   end
 end
